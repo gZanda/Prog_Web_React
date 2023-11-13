@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import './index.css';
+import './styles.css';
 
-const Login = () => {
+export default function Login () {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
         // Lógica de autenticação aqui
         if (username === 'admin' && password === 'admin') {
-            alert('Login bem-sucedido!');
+            window.location.href = "http://localhost:3000/admin/inicio";
         } else {
             alert('Credenciais inválidas. Tente novamente.');
         }
@@ -49,5 +49,3 @@ const Login = () => {
         </div>
     );
 }
-
-export default Login;

@@ -1,12 +1,12 @@
+import React from 'react';
+import Routes from './routes/index';
+
 import './App.css';
-import Login from "./views/login";
 
-function App() {
-  return (
-    <div className="App">
-        <Login />
-    </div>
-  );
-}
-
-export default App;
+export default function App () {
+    return (
+        <div className={`app`}>
+            <Routes />
+        </div>
+    );
+};
