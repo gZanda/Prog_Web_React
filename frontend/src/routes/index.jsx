@@ -5,6 +5,7 @@ import Login from '../views/login';
 import Index from "../views/admin/layout";
 import BaseView from "../views/admin/layout/baseView";
 import Home from "../views/admin/home";
+import Tasks from "../views/admin/tasks";
 
 const NotFound = () => {
     return <div>404 - Not Found</div>;
@@ -24,7 +25,7 @@ export default function Router() {
                 <Route
                     path="tarefas"
                     element={
-                        <BaseView component={<Home />} title={'Tarefas'} />
+                        <BaseView component={<Tasks />} title={'Tarefas'} />
                     }
                 />
             </Route>
