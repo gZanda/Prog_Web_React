@@ -17,6 +17,9 @@ const ListSidebar = [
 ];
 
 export default function Sidebar() {
+    function handleClick(e) {
+			localStorage.removeItem('Token')
+    }
     return (
         <aside className={`Sidebar`}>
             <div className={`container container-sidebar`}>
@@ -45,7 +48,7 @@ export default function Sidebar() {
                     <a href={`/`} className={'sidebar-link'}>
                         <li>
                             <span className={'fas fa-arrow-circle-left'} />
-                            <span className={`sidebar-out`}>Sair</span>
+                            <span className={`sidebar-out`} onClick={handleClick}>Sair</span>
                         </li>
                     </a>
                 </ul>

@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
+import axios from '../../utils/axios_instance';
 import './styles.css';
 
 export default function Login () {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+      email: '',
+      password: '',
+    });
 
-    const handleLogin = () => {
-        // Lógica de autenticação aqui
-        if (username === 'admin' && password === 'admin') {
-            window.location.href = "http://localhost:3000/admin/inicio";
-        } else {
-            alert('Credenciais inválidas. Tente novamente.');
-        }
+    function handleChange(e) {
+			setFormData({ ...formData, [e.target.name]: e.target.value });
+			console.log(formData)
+		};
+
+    async function handleLogin(e) {
+      e.preventDefault();
+
+      try{
+        const response = await axios.post('/userLogin/', formData);
+
+				const token = response.data.token;
+
+				localStorage.setItem('Token', token);
+      } catch(error) {
+        alert('Erro ao fazer login:', error)
+      }
     };
 
     return (
@@ -25,18 +38,20 @@ export default function Login () {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Nome de usuário"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
+																		name="email"
+                                    placeholder="Email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="form-group">
                                 <input
                                     type="password"
                                     className="form-control"
+																		name="password"
                                     placeholder="Senha"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={formData.password}
+                                    onChange={handleChange}
                                 />
                             </div>
                             <button className="btn btn-primary btn-block" onClick={handleLogin}>

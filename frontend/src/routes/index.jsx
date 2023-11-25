@@ -6,6 +6,7 @@ import Index from "../views/admin/layout";
 import BaseView from "../views/admin/layout/baseView";
 import Home from "../views/admin/home";
 import Tasks from "../views/admin/tasks";
+import Signin from '../views/sigin';
 
 const NotFound = () => {
     return <div>404 - Not Found</div>;
@@ -29,6 +30,7 @@ export default function Router() {
                     }
                 />
             </Route>
+            <Route path="/sigin" element={<Signin />}/>
             <Route path={`*`} element={<NotFound />} />
         </Routes>
     );
