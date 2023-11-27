@@ -8,6 +8,7 @@ import Home from "../views/admin/home";
 import Tasks from "../views/admin/tasks";
 import Signin from '../views/sigin';
 import Users from '../views/admin/users';
+import EditTask from "../views/admin/tasks/edit";
 
 const NotFound = () => {
     return <div>404 - Not Found</div>;
@@ -28,6 +29,12 @@ export default function Router() {
                     path="tarefas"
                     element={
                         <BaseView component={<Tasks />} title={'Tarefas'} />
+                    }
+                />
+                <Route
+                    path="tarefas/editar"
+                    element={
+                        <BaseView component={<EditTask />} title={'Editar Tarefas'} />
                     }
                 />
                 <Route 

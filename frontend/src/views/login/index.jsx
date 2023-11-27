@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from '../../utils/axios_instance';
 import './styles.css';
 
-export default function Login () {
+export default function Login (message) {
     const [formData, setFormData] = useState({
       email: '',
       password: '',
@@ -11,21 +11,19 @@ export default function Login () {
     function handleChange(e) {
 			setFormData({ ...formData, [e.target.name]: e.target.value });
 			console.log(formData)
-		};
+    }
 
     async function handleLogin(e) {
       e.preventDefault();
 
-      try{
-        const response = await axios.post('/userLogin/', formData);
-
-				const token = response.data.token;
-
-				localStorage.setItem('Token', token);
+      try {
+            const response = await axios.post('/userLogin/', formData);
+            const token = response.data.token;
+            localStorage.setItem('Token', token);
       } catch(error) {
-        alert('Erro ao fazer login:', error)
+        alert('Erro ao fazer login: ' + error.message)
       }
-    };
+    }
 
     return (
         <div className="container container-fluid">
@@ -38,7 +36,7 @@ export default function Login () {
                                 <input
                                     type="text"
                                     className="form-control"
-																		name="email"
+                                    name="email"
                                     placeholder="Email"
                                     value={formData.email}
                                     onChange={handleChange}
@@ -48,7 +46,7 @@ export default function Login () {
                                 <input
                                     type="password"
                                     className="form-control"
-																		name="password"
+                                    name="password"
                                     placeholder="Senha"
                                     value={formData.password}
                                     onChange={handleChange}

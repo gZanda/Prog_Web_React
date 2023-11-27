@@ -10,6 +10,11 @@ const ListSidebar = [
         redirect: '/admin/inicio',
     },
     {
+        title: 'Usuários',
+        icon: 'fas fa-user',
+        redirect: '/admin/usuarios',
+    },
+    {
         title: 'Tarefas',
         icon: 'fas fa-home',
         redirect: '/admin/tarefas',
