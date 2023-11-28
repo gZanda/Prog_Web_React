@@ -6,7 +6,7 @@ import Index from "../views/admin/layout";
 import BaseView from "../views/admin/layout/baseView";
 import Home from "../views/admin/home";
 import Tasks from "../views/admin/tasks";
-import Signin from '../views/sigin';
+import SignUp from '../views/cadastrar';
 import Users from '../views/admin/users';
 import EditTask from "../views/admin/tasks/edit";
 
@@ -44,7 +44,7 @@ export default function Router() {
                     }
                 />
             </Route>
-            <Route path="/sigin" element={<Signin />}/>
+            <Route path="/cadastrar" element={<SignUp />}/>
             <Route path={`*`} element={<NotFound />} />
         </Routes>
     );

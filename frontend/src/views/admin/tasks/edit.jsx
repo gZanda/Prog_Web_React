@@ -1,46 +1,74 @@
 import React, {useState, useEffect} from 'react';
+import axios from '../../../utils/axios_instance';
 import "./edit.styles.css";
+import UserType from "../../../util/UserType";
 
 export default function EditTask () {
-    function validateForm(e) {
+    const [task, setTask] = useState({});
+
+    useEffect(() => {
+        const param = new URLSearchParams(window.location.search).get('id');
+        if (param) {
+            (
+                async function retrieveTask(){
+                	try {
+                		const response = await axios.get(`/tasks/${param}/`);
+                        setTask(response.data);
+                	} catch(error) {
+                		alert('Ocorreu um erro: ' + error);
+                		console.log(error)
+                	}
+                }
+            )()
+        }
+    }, [])
+
+
+    async function handleEdit(e) {
         e.preventDefault();
-        console.log("teste")
+        let data = Object.fromEntries(new FormData(e.target));
+        try {
+            const response = await axios.put(
+                `/editTask/${id}/`, task);
+            window.location.href = "http://localhost:3000/admin/tarefas"
+        } catch (error) {
+            alert('Ocorreu um erro: ' + error);
+            console.log(error)
+        }
     }
 
     return (
         <div className="container mt-4">
-            <form onSubmit={validateForm}>
+            <form onSubmit={handleEdit}>
                 <div className="form-group">
-                    <label htmlFor="descricao">Descrição:</label>
-                    <input type="text" className="form-control" id="descricao" name="descricao" required />
+                    <label htmlFor="description">Descrição:</label>
+                    <input value={task.description} type="text" className="form-control" id="description" name="description" required />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="status">Status:</label>
                     <select className="form-control" id="status" name="status" required>
-                        <option value="pendente">Pendente</option>
-                        <option value="concluido">Concluído</option>
+                        <option value="Pronta">Pronta</option>
+                        <option value="Pendente">Pendente</option>
                     </select>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="statusAprovado">Status Aprovado:</label>
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="statusAprovado" id="avaliado"
-                               value="avaliado" checked />
-                            <label className="form-check-label" htmlFor="avaliado">Avaliado</label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="statusAprovado" id="naoAvaliado"
-                               value="naoAvaliado" />
-                            <label className="form-check-label" htmlFor="naoAvaliado">Não Avaliado</label>
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="responsavel">Responsável (id):</label>
-                    <input type="number" className="form-control" id="responsavel" name="responsavel" required />
-                </div>
+                { UserType.isManager() &&
+                    <>
+                        <div className="form-group">
+                            <label htmlFor="approval_status">Status:</label>
+                            <select className="form-control" id="approval_status" name="approval_status" required>
+                                <option value="Aprovada">Aprovada</option>
+                                <option value="Rejeitada">Rejeitada</option>
+                                <option value="Nao Avaliada">Não Avaliada</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="responsible">Responsável (id):</label>
+                            <input value={task.responsible} type="number" className="form-control" id="responsible" name="responsible" required />
+                        </div>
+                    </>
+                }
 
                 <div className={"d-flex justify-content-end"}>
                     <button type="submit" className="btn btn-primary" style={{width: 150}}>Salvar</button>

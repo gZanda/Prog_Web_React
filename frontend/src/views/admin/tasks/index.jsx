@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import axios from '../../../utils/axios_instance';
 import "./styles.css";
+import userType from "../../../util/UserType";
 
 export default function Tasks () {
     const [data, setData] = useState([]);
-	const [idTask, setIdTask] = useState();
 	const [permissionDenied, setPermissionDenied] = useState(false);
     
-	// Faz a request toda vez que o componente é renderizado em tela (Primeira vez que abre a página ou cada vez que atualiza a pagina)
 	useEffect(() => {
 		async function fetch() {
 			try {
@@ -22,68 +21,29 @@ export default function Tasks () {
 			}
 		}
 		fetch();
-	}, [Tasks])
+	}, [])
 
-		// função para retornar uma task apartir do seu ID *ESTILIZAR*
-		async function retrieveTask(){
-			try{
-				const response = await axios.get(`/tasks/${idTask}/`);
-				setData([response.data])
-			}catch(error){
-				if (error.response.status === 403)
-					setPermissionDenied(true);
-				alert('Ocorreu um erro: ' + error);
-				console.log(error)
-			}
+	async function addTask(e){
+		e.preventDefault();
+
+		let data = Object.fromEntries(new FormData(e.target));
+
+		try {
+			const response = await axios.post("/createTask/", data);
+		} catch(error) {
+			alert("Ocorreu um erro: " + error)
 		}
+	}
 
-		async function addTask(e){
-			e.preventDefault();
+	async function editTask(id){
+		window.location.href = `http://localhost:3000/admin/tarefas/editar?id=${id}`;
+	}
 
-			let data = Object.fromEntries(new FormData(e.target));
-			data['status'] = "Pendente"
-			data['approval_status'] = "Não avaliado"
-
-			try {
-				const response = await axios.post("/createTask/", data);
-				console.log(response.data)
-			} catch(error) {
-				if(error.response.status === 403)
-					setPermissionDenied(true);
-				alert("Ocorreu um erro: " + error)
-			} finally {
-				fetch()
-			}
-		}
-
-		//função para editar task (os dados estão estáticos, tem que mudar o objeto mandado na requisição pros dados do formulário)*ESTILIZAR*
-		async function editTask(id){
-			try {
-				const response = await axios.put(
-				`/editTask/${id}/`,
-				{
-					"description":"Task editada!",
-					"status":"Pendente",
-					"approval_status":"Não Avaliada",
-					"responsible": 2
-				});
-				setData([response.data])
-			} catch(error) {
-				if (error.response.status === 403)
-					setPermissionDenied(true);
-				alert('Ocorreu um erro: ' + error);
-				console.log(error)
-			}
-		}
-
-		//função para deletar task *ESTILIZAR com um botão 'X'* 
-		async function deleteTask(id){
+		async function deleteTask(id) {
 			try {
 				const response = await axios.delete(`/deleteTask/${id}/`);
 				setData([response.data])
-			} catch(error) {
-				if (error.response.status === 403)
-					setPermissionDenied(true);
+			} catch (error) {
 				alert('Ocorreu um erro: ' + error);
 				console.log(error)
 			}
@@ -126,11 +86,14 @@ export default function Tasks () {
 				</div>
 			</div>
 
-			<header className={"d-flex justify-content-end"}>
-				<button type="button" className="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addTaskModal">
-					Adicionar Tarefa
-				</button>
-			</header>
+			{userType.isManager() &&
+				<header className={"d-flex justify-content-end"}>
+					<button type="button" className="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+						Adicionar Tarefa
+					</button>
+				</header>
+			}
+
             <table className="table text-center mt-3">
                 <thead>
                     <tr>
@@ -143,8 +106,8 @@ export default function Tasks () {
                     </tr>
                 </thead>
                 <tbody>
-					{data.map(el => (
-						<tr>
+					{data.map((el, index) => (
+						<tr key={index}>
 							<th scope="row"> {el.id}</th>
 							<td>{el.description}</td>
 							<td>{el.status}</td>
@@ -152,10 +115,10 @@ export default function Tasks () {
 							<td>{el.responsible}</td>
 							<td>
 								<div className={"d-flex justify-content-around"}>
-									<button type={"button"} className={"btn btn-primary w-auto"} onClick={editTask(el.id)}>
+									<button type={"button"} className={`btn btn-primary w-auto edit-${index + 1}`} onClick={() => {editTask(index + 1)}}>
 										<i className="bi bi-pencil-square action-icon"></i>
 									</button>
-									<button type={"button"} className={"btn btn-primary w-auto"} onClick={deleteTask(el.id)}>
+									<button type={"button"} className={`btn btn-primary w-auto delete-${index + 1}`} onClick={() => {deleteTask(index + 1)}}>
 										<i className="bi bi-x action-icon"></i>
 									</button>
 								</div>

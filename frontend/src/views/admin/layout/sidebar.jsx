@@ -1,30 +1,15 @@
 import React from 'react';
 import './sidebar.styles.css';
-
 import Logo from '../../../assets/logos/logo.svg';
+import UserType from "../../../util/UserType";
 
-const ListSidebar = [
-    {
-        title: 'Início',
-        icon: 'fas fa-home',
-        redirect: '/admin/inicio',
-    },
-    {
-        title: 'Usuários',
-        icon: 'fas fa-user',
-        redirect: '/admin/usuarios',
-    },
-    {
-        title: 'Tarefas',
-        icon: 'fas fa-home',
-        redirect: '/admin/tarefas',
-    }
-];
 
 export default function Sidebar() {
     function handleClick(e) {
-			localStorage.removeItem('Token')
+			localStorage.removeItem('Token');
+            window.location.href = "http://localhost:3000";
     }
+
     return (
         <aside className={`Sidebar`}>
             <div className={`container container-sidebar`}>
@@ -35,24 +20,37 @@ export default function Sidebar() {
                             src={Logo}
                             className={`img-fluid my-4`}
                             width={`200px`}
-                            alt="Mercearia do Seu Zé"
-                        />
+                            alt={"admin"}/>
                     </div>
                 </div>
                 <ul>
-                    {ListSidebar.map((item, index) => {
-                        return (
-                            <a className={'sidebar-link'} key={index.toString()} href={item.redirect}>
-                                <li>
-                                    <span className={item.icon} />
-                                    <span className={`sidebar-item`}>{item.title}</span>
-                                </li>
-                            </a>
-                        );
-                    })}
+                    <a className={'sidebar-link'} href={'/admin/inicio'}>
+                        <li>
+                            <i className={'bi bi-house'} style={{fontSize: 25}}/>
+                            <span className={`sidebar-item mx-2`}>Início</span>
+                        </li>
+                    </a>
+                    {
+                        UserType.isManager() &&
+                        <a className={'sidebar-link'} href={'/admin/usuarios'}>
+                            <li>
+                                <i className={'bi bi-person-fill'} style={{fontSize: 25}}/>
+                                <span className={`sidebar-item mx-2`}>Usuários</span>
+                            </li>
+                        </a>
+                    }
+
+                    <a className={'sidebar-link'} href={'/admin/tarefas'}>
+                        <li>
+                            <i className={'bi bi-calendar-check'} style={{fontSize: 25}}/>
+                            <span className={`sidebar-item mx-2`}>Tarefas</span>
+                        </li>
+                    </a>
+
+
                     <a href={`/`} className={'sidebar-link'}>
                         <li>
-                            <span className={'fas fa-arrow-circle-left'} />
+                            <span className={'bi bi-box-arrow-in-left'} />
                             <span className={`sidebar-out`} onClick={handleClick}>Sair</span>
                         </li>
                     </a>
