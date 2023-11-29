@@ -44,6 +44,9 @@ export default function Login (message) {
                                 </div>
                                 <button type="submit" className="btn btn-primary">Entrar</button>
                             </form>
+                            <a href={"http://localhost:3000/cadastrar"} className={"btn-signup"}>
+                                Cadastrar
+                            </a>
                         </div>
                     </div>
                 </div>

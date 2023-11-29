@@ -27,9 +27,10 @@ export default function EditTask () {
     async function handleEdit(e) {
         e.preventDefault();
         let data = Object.fromEntries(new FormData(e.target));
+
         try {
             const response = await axios.put(
-                `/editTask/${id}/`, task);
+                `/editTask/${task.id}/`, task);
             window.location.href = "http://localhost:3000/admin/tarefas"
         } catch (error) {
             alert('Ocorreu um erro: ' + error);
