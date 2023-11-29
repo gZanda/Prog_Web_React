@@ -57,7 +57,7 @@ export default function EditTask () {
                 { UserType.isManager() &&
                     <>
                         <div className="form-group">
-                            <label htmlFor="approval_status">Status:</label>
+                            <label htmlFor="approval_status">Status de aprovação:</label>
                             <select className="form-control" id="approval_status" name="approval_status" required>
                                 <option value="Aprovada">Aprovada</option>
                                 <option value="Rejeitada">Rejeitada</option>

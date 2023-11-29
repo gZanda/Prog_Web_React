@@ -25,14 +25,16 @@ export default function Tasks () {
 
 	async function addTask(e){
 		e.preventDefault();
+		document.querySelector('.btn-submit').disabled = true;
 
 		let data = Object.fromEntries(new FormData(e.target));
 		data.responsible = parseInt(data.responsible);
-		console.log(data);
 		try {
 			const response = await axios.post("/createTask/", data);
 		} catch(error) {
 			alert("Ocorreu um erro: " + error)
+		} finally {
+			window.location.reload();
 		}
 	}
 
@@ -61,7 +63,7 @@ export default function Tasks () {
 
     return (
         <div>
-			<div className="modal fade" id="addTaskModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
+			<div className="modal fade modal-add" id="addTaskModal" tabIndex="-1" aria-labelledby="ModalLabel"
 				 aria-hidden="true">
 				<div className="modal-dialog">
 					<div className="modal-content">
@@ -95,7 +97,7 @@ export default function Tasks () {
 									<input type="number" className="form-control" id="responsible" name="responsible"
 										   required />
 								</div>
-								<button type="submit" className="btn btn-primary">Enviar</button>
+								<button type="submit" className="btn btn-primary btn-submit">Enviar</button>
 							</form>
 						</div>
 					</div>
