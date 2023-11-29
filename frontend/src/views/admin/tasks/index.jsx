@@ -45,7 +45,7 @@ export default function Tasks () {
 		async function deleteTask(id) {
 			try {
 				const response = await axios.delete(`/deleteTask/${id}/`);
-				setData([response.data])
+				window.location.reload();
 			} catch (error) {
 				alert('Ocorreu um erro: ' + error);
 				console.log(error)
