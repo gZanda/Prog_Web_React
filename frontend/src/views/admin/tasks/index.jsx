@@ -27,6 +27,7 @@ export default function Tasks () {
 		e.preventDefault();
 
 		let data = Object.fromEntries(new FormData(e.target));
+		data.responsible = parseInt(data.responsible);
 
 		try {
 			const response = await axios.post("/createTask/", data);
@@ -42,7 +43,7 @@ export default function Tasks () {
 		async function deleteTask(id) {
 			try {
 				const response = await axios.delete(`/deleteTask/${id}/`);
-				setData([response.data])
+				window.location.reload();
 			} catch (error) {
 				alert('Ocorreu um erro: ' + error);
 				console.log(error)
