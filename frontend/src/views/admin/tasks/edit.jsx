@@ -30,7 +30,7 @@ export default function EditTask () {
 
         try {
             const response = await axios.put(
-                `/editTask/${task.id}/`, task);
+                `/editTask/${task.id}/`, data);
             window.location.href = "http://localhost:3000/admin/tarefas"
         } catch (error) {
             alert('Ocorreu um erro: ' + error);
