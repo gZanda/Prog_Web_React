@@ -21,7 +21,7 @@ export default function Users(){
     async function deleteUser(id){
         try {
             const response = await axios.delete(`/deleteUser/${id}/`);
-            alert(response.data);
+            window.location.reload();
         } catch(error) {
             alert("Ocorreu um erro: " + error)
         }
