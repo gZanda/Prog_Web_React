@@ -75,6 +75,21 @@ export default function Tasks () {
 										   required />
 								</div>
 								<div className="form-group">
+									<label htmlFor="status">Status:</label>
+									<select className="form-control" id="status" name="status" required>
+										<option value="Pronta">Pronta</option>
+										<option value="Pendente" selected>Pendente</option>
+									</select>
+								</div>
+								<div className="form-group">
+									<label htmlFor="approval_status">Status:</label>
+									<select className="form-control" id="approval_status" name="approval_status" required>
+										<option value="Aprovada">Aprovada</option>
+										<option value="Rejeitada">Rejeitada</option>
+										<option value="Nao Avaliada" selected>Não Avaliada</option>
+									</select>
+								</div>
+								<div className="form-group">
 									<label htmlFor="responsible">Responsável (Número):</label>
 									<input type="number" className="form-control" id="responsible" name="responsible"
 										   required />
