@@ -7,9 +7,9 @@ export default function SignUp(){
         e.preventDefault();
 
         let data = Object.fromEntries(new FormData(e.target));
+        console.log(data)
         try {
             const response = await axios.post('/userSignin/', data);
-
             window.location.href = "http://localhost:3000/";
         } catch (error) {
             console.error('Erro ao fazer cadastro:', error);

@@ -27,7 +27,8 @@ export default function Tasks () {
 		e.preventDefault();
 
 		let data = Object.fromEntries(new FormData(e.target));
-
+		data.responsible = parseInt(data.responsible);
+		console.log(data);
 		try {
 			const response = await axios.post("/createTask/", data);
 		} catch(error) {
@@ -86,7 +87,7 @@ export default function Tasks () {
 									<select className="form-control" id="approval_status" name="approval_status" required>
 										<option value="Aprovada">Aprovada</option>
 										<option value="Rejeitada">Rejeitada</option>
-										<option value="Nao Avaliada" selected>Não Avaliada</option>
+										<option value="Não Avaliada" selected>Não Avaliada</option>
 									</select>
 								</div>
 								<div className="form-group">
