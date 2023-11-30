@@ -7,6 +7,7 @@ import UserType from "../../../util/UserType";
 export default function Sidebar() {
     function handleClick(e) {
 			localStorage.removeItem('Token');
+            localStorage.removeItem('Role');
             window.location.href = "http://localhost:3000";
     }
 

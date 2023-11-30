@@ -10,6 +10,16 @@ import SignUp from '../views/cadastrar';
 import Users from '../views/admin/users';
 import EditTask from "../views/admin/tasks/edit";
 
+const displayText = () => {
+    const user_role = localStorage.getItem('Role');
+    if (user_role === "Manager") {
+        return "Área Administrativa";
+    }
+    else {
+        return "Área do Funcionário";
+    }
+};
+
 const NotFound = () => {
     return <div>404 - Not Found</div>;
 };
@@ -22,7 +32,7 @@ export default function Router() {
                 <Route
                     path="inicio"
                     element={
-                        <BaseView component={<Home />} title={'Área Administrativa'} />
+                        <BaseView component={<Home />} title={displayText()} />
                     }
                 />
                 <Route
